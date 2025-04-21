@@ -24,8 +24,13 @@ document.fonts.ready.then(() => {
     duration: 2, // Animate over 1 second
     ease: "power2.inOut",
   })
-  .set(".wrapper", { display: "none" }); // Hide it after move
-  
+ 
+  .set(".wrapper", { display: "none" ,y:"-100%"}); // Hide it after move
+  wrapperTl.to(".banner", {
+    y: "0", // Move up full height
+    duration: 1, // Animate over 1 second
+    ease: "power2.inOut",
+  })
   // Font family change timeline
   const fontTimeline = gsap.timeline({
     repeat: -1,
@@ -44,10 +49,10 @@ document.fonts.ready.then(() => {
 });
 
 // Animate text for #spice
-gsap.to("#spice", {
-  duration: 1,
-  text: "WM",
-});
+// gsap.to("#spice", {
+//   duration: 1,
+//   text: "WM",
+// });
 
 // menu luinks
 const burger = document.getElementById('burger');
@@ -114,9 +119,9 @@ const menuItems = document.querySelectorAll(".menus a");
 
 // Function to make header white mode
 function setWhiteHeader() {
-  gsap.to(logo, { color: "#fff", duration: 0.5 });
-  gsap.to(menus, { backgroundColor: "#fff", duration: 0.5 });
-  gsap.to(menuItems, { color: "black", duration: 0.5 }); // ✅ FIXED
+  gsap.to(logo, { color: "#fff", duration: 0.2 });
+  gsap.to(menus, { backgroundColor: "#fff", duration: 0.2 });
+  gsap.to(menuItems, { color: "black", duration: 0.2 }); // ✅ FIXED
 }
 
 // Function to reset header to normal/default
@@ -166,7 +171,7 @@ gsap.from(".show-img", {
   ease: "power1.out",    // smooth but fast
   scrollTrigger: {
     trigger: ".show-img",
-    start: "top 90%",     // start as soon as image almost enters
+    start: "top 99%",     // start as soon as image almost enters
     toggleActions: "play none none none"  
   }
 });
@@ -176,6 +181,17 @@ gsap.from(".show-img", {
 const colours = ["#fff", "#acf7ff", "#ebfeff", "#8fa3b4", "#0e1701"];
 const containers = document.querySelectorAll(".first-img");
 
+// Animate containers moving left one by one
+gsap.fromTo(containers,{x:200}, {
+  x: 0, // Move left by 100px (you can adjust this)
+  duration: 1,
+  stagger: 0.2, // delay between each container
+  ease: "power2.inOut",
+//  repeat: -1,    loop forever
+  // yoyo: true    // come back smoothly
+});
+
+// Handle color change on hover
 containers.forEach((container) => {
   const tl = gsap.timeline({ paused: true, repeat: -1, yoyo: true });
 
@@ -186,5 +202,8 @@ containers.forEach((container) => {
   });
 
   container.addEventListener("mouseenter", () => tl.play());
-  container.addEventListener("mouseleave", () => tl.pause(0)); // reset when mouse leaves
+  container.addEventListener("mouseleave", () => tl.pause(0)); // reset color when mouse leaves
 });
+
+
+
